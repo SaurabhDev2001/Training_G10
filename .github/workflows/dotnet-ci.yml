@@ -25,25 +25,15 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Debug -show files
-        run: |
-          echo "Current directory:" && pwd
-          echo "List top-level files and floders:" && ls -la
-          echo "List CalculatorSolution floders:" && ls -la CalculatorSolution || true
-          echo "Find any .sln files:" && find . -name ".sln" -maxdepth 3
-
       - name: Restore dependencies
-        working-directory: CalculatorSolution
-        run: dotnet restore CalculatorSolution.sln
+        run: dotnet restore CalculatorSolution/CalculatorSolution.sln
 
       - name: Build solution
-        working-directory: CalculatorSolution
-        run: dotnet build CalculatorSolution.sln --configuration Release --no-restore
+        run: dotnet build CalculatorSolution/CalculatorSolution.sln --configuration Release --no-restore
 
 
         #------------------Unit Test--------------------
       - name: Run unit tests
-        working-directory: CalculatorSolution
         run: dotnet test CalculatorSolution/CalculatorTests.csproj --configuration Release --no-build --verbosity normal
 
       
