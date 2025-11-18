@@ -1,0 +1,89 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\40042868\\Training_G10-develop\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E0568D9B-1DE3-4E12-BAEA-488A29AA8F35}|CalculatorApp\\CalculatorApp.csproj|c:\\users\\40042868\\training_g10-develop\\calculatorapp\\controllers\\calculatorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0568D9B-1DE3-4E12-BAEA-488A29AA8F35}|CalculatorApp\\CalculatorApp.csproj|solutionrelative:calculatorapp\\controllers\\calculatorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0568D9B-1DE3-4E12-BAEA-488A29AA8F35}|CalculatorApp\\CalculatorApp.csproj|c:\\users\\40042868\\training_g10-develop\\calculatorapp\\services\\icalculatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0568D9B-1DE3-4E12-BAEA-488A29AA8F35}|CalculatorApp\\CalculatorApp.csproj|solutionrelative:calculatorapp\\services\\icalculatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0568D9B-1DE3-4E12-BAEA-488A29AA8F35}|CalculatorApp\\CalculatorApp.csproj|c:\\users\\40042868\\training_g10-develop\\calculatorapp\\services\\calculatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0568D9B-1DE3-4E12-BAEA-488A29AA8F35}|CalculatorApp\\CalculatorApp.csproj|solutionrelative:calculatorapp\\services\\calculatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CalculatorController.cs",
+              "DocumentMoniker": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorApp\\Controllers\\CalculatorController.cs",
+              "RelativeDocumentMoniker": "CalculatorApp\\Controllers\\CalculatorController.cs",
+              "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorApp\\Controllers\\CalculatorController.cs",
+              "RelativeToolTip": "CalculatorApp\\Controllers\\CalculatorController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAiwFwAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T09:39:21.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ICalculatorService.cs",
+              "DocumentMoniker": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorApp\\Services\\ICalculatorService.cs",
+              "RelativeDocumentMoniker": "CalculatorApp\\Services\\ICalculatorService.cs",
+              "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorApp\\Services\\ICalculatorService.cs",
+              "RelativeToolTip": "CalculatorApp\\Services\\ICalculatorService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T09:39:08.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CalculatorService.cs",
+              "DocumentMoniker": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorApp\\Services\\CalculatorService.cs",
+              "RelativeDocumentMoniker": "CalculatorApp\\Services\\CalculatorService.cs",
+              "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorApp\\Services\\CalculatorService.cs",
+              "RelativeToolTip": "CalculatorApp\\Services\\CalculatorService.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAQwCIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T09:37:57.757Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1169,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

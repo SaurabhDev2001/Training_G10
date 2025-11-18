@@ -1,0 +1,97 @@
+[
+  {
+    "ContainingType": "CalculatorApp.Controllers.CalculatorController",
+    "Method": "Add",
+    "RelativePath": "api/Calculator/add",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "number1",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "number2",
+        "Type": "System.Double",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CalculatorApp.Controllers.CalculatorController",
+    "Method": "AddPost",
+    "RelativePath": "api/Calculator/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CalculatorApp.Models.CalculationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CalculatorApp.Controllers.CalculatorController",
+    "Method": "Multiply",
+    "RelativePath": "api/Calculator/Multiply",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "number1",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "number2",
+        "Type": "System.Double",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CalculatorApp.Controllers.CalculatorController",
+    "Method": "Subtract",
+    "RelativePath": "api/Calculator/subtract",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "number1",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "number2",
+        "Type": "System.Double",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CalculatorApp.Controllers.CalculatorController",
+    "Method": "SubtractPost",
+    "RelativePath": "api/Calculator/subtract",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CalculatorApp.Models.CalculationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
