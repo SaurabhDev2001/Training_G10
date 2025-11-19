@@ -48,6 +48,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: | 
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"${{ vars.PROJECT_KEY }}" /o:"${{ vars.ORGANIZATION }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.qualitygate.wait=true
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"${{ vars.PROJECT_KEY }}" /o:"${{ vars.ORGANIZATION }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           dotnet build
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
