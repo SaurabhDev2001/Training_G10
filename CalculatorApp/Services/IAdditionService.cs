@@ -1,8 +1,7 @@
 ﻿namespace CalculatorApp.Services
 {
-    public interface ICalculatorService
+    public interface IAdditionService
     {
         double Add(double a, double b);
-        double Subtract(double a, double b);
     }
 }

@@ -1,0 +1,31 @@
+# Build folders
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Logs
+*.log
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Environment files
+.env
+
+# IDE settings
+.vscode/
+
+# GitHub Actions cache
+*.cache
+
+# Ignore specific C# files
+CalculatorApp/Controllers/SubtractionController.cs
+CalculatorApp/Services/ISubtractionService.cs
+CalculatorApp/Services/SubtractionService.cs
+CalculatorAppTests/UnitTests/SubtractionServiceTest.cs
+CalculatorAppTests/SystemTests/SubtractionControllerTests.cs
