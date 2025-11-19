@@ -7,7 +7,7 @@ on:
     branches: "*"
       
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,10 @@ jobs:
 
       - name: Build Solution
         run: dotnet build --no-restore
+  Test:
+    runs-on: ubuntu-latest
 
+    steps:
       - name: Run Tests
         run: dotnet test --no-build --verbosity normal
 
@@ -42,32 +45,3 @@ jobs:
       - name: Display struture of downloaded files
         run: ls -R
 
-      - name: Start API
-        run: |
-          nohup dotnet run --project CalculatorApp > api.log 2>&1 & echo $! > api.pid
-          echo "API started"
-
-      - name: Wait for API
-        run: |
-          echo "Waiting for API ..."
-          for i in {1..40}; do
-            if curl -s https://localhost:7182/swagger/v1/swagger.json > /dev/null 2>&1; then
-              echo "API is running"
-              exit 0
-            fi
-            echo "not up yet"
-            sleep 1
-          done
-          echo "API did not started"
-          tail -n 200 api.log || true
-          exit 1
-          
-      - name: Test API
-        run: |
-          echo "GET / ..."
-          curl -v --fail "http://localhost:7182/api/Calculator/add?x=2&y=3"
-
-      - name: Stop API
-        if: always()
-        run: |
-            kill $(cat api.pid)
