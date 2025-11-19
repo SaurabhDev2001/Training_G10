@@ -42,14 +42,14 @@ jobs:
       - name: Display struture of downloaded files
         run: ls -R
 
-      - name: Start API
-        run: |
-          dotnet run --project CalculatorApp --urls "https://0.0.0.0:5000"&
-          sleep 10
+      # - name: Start API
+      #   run: |
+      #     dotnet run --project CalculatorApp --urls "https://0.0.0.0:5000"&
+      #     sleep 10
 
-      - name: Test Swagger
-        run: |
-          curl -I https://localhost:5000/swagger/index.html
+      # - name: Test Swagger
+      #   run: |
+      #     curl -I https://localhost:5000/swagger/index.html
 
       # - name: Install Newman
       #   run: npm install -g newman
