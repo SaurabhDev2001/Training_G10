@@ -32,9 +32,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: calculator-build
-          path: CalculatorApp/bin/Release/**
+          path: CalculatorApp/bin/**
 
-      # - name: Download a Build Artifact
-      #   uses: actions/download-artifact@v6.0.0
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v6.0.0
         
   
