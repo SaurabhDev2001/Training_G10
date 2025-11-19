@@ -40,7 +40,7 @@ jobs:
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: | 
-          New-Item -Path ${{ runner.temp }}\scanner -ItemType Dircetory
+          New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
 
       - name: Build and Analyze
