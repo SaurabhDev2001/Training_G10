@@ -41,6 +41,15 @@ jobs:
           
       - name: Display struture of downloaded files
         run: ls -R
+
+      - name: Start API
+        run: |
+          dotnet run --project CalculatorApp &
+          sleep 10
+
+      - name: Test API Endpoints
+        run: |
+          curl -X GET htts://localhost:5000/api/values
         
         
   
