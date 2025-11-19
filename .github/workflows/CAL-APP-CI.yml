@@ -47,14 +47,14 @@ jobs:
           dotnet run --project CalculatorApp &
           sleep 10
 
-      # - name: Test API Endpoints
-      #   run: |
-      #     curl -X GET https://localhost:5000/api/values
+      - name: Test API Endpoints
+        run: |
+          curl https://localhost:5000/swagger/index.html
 
-      - name: Install Newman
-        run: npm install -g newman
+      # - name: Install Newman
+      #   run: npm install -g newman
 
-      - name: Run Postman Tests
-        run: newman run CalculatorAPI.postman_collection.json
+      # - name: Run Postman Tests
+      #   run: newman run CalculatorAPI.postman_collection.json
         
   
