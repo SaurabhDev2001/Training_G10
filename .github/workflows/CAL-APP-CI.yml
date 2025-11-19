@@ -49,7 +49,7 @@ jobs:
 
       - name: Test API Endpoints
         run: |
-          curl -X GET htts://localhost:5000/api/values
+          curl -X GET https://localhost:5000/api/values
         
         
   
