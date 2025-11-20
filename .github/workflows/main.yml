@@ -1,0 +1,27 @@
+name: Caculator App Main
+
+on:  
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches:
+      - develop
+      - develop1
+      - 'feature1/*'
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      run-condition: ${{ github.actor == 'SaurabhDev2001' || github.base_ref != 'main' }}
+
+  test:
+    uses: ./.github/workflows/test.yml
+    with:
+      run-condition: ${{ github.actor == 'SaurabhDev2001' || github.base_ref != 'main' }}     
+
+  
+
+
