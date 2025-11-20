@@ -18,8 +18,8 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      - name: Download Build Artifactg
-        uses: actions/download-artifct@v5
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v5
         with:
           name: Calculator-build
 
