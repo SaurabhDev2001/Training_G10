@@ -1,41 +1,41 @@
-name: Build Workflow
+# name: Build Workflow
 
-on:
-  workflow_call:
-    inputs:
-      run-condition:
-        required: true
-        type: string
+# on:
+#   workflow_call:
+#     inputs:
+#       run-condition:
+#         required: true
+#         type: string
 
       
-jobs:
-  build:
-    if: ${{ inputs.run-condition == 'true'}}
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     if: ${{ inputs.run-condition == 'true'}}
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "8.0.x"
+#       - name: Setup .NET
+#         uses: actions/setup-dotnet@v3
+#         with:
+#           dotnet-version: "8.0.x"
 
-      - name: Restore Dependencies
-        run: dotnet restore
+#       - name: Restore Dependencies
+#         run: dotnet restore
 
-      - name: Build Solution
-        run: dotnet build --no-restore
+#       - name: Build Solution
+#         run: dotnet build --no-restore
 
-      - name: Create Git Tag
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git tag v1.0.0
-          git push origin v1.0.0
+#       - name: Create Git Tag
+#         run: |
+#           git config user.name "github-actions"
+#           git config user.email "github-actions@github.com"
+#           git tag v1.0.0
+#           git push origin v1.0.0
 
-      - name: Upload a GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: CalculatorApp/bin/**
+#       - name: Upload a GitHub Release
+#         uses: softprops/action-gh-release@v1
+#         with:
+#           files: CalculatorApp/bin/**
