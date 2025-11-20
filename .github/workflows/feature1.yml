@@ -37,7 +37,7 @@ jobs:
           -reporttypes:Html
 
     - name:  Upload Test Results 
-      uses:  actions/upload-artifacts@v4
+      uses:  actions/upload-artifact@v4
       with:
         name:  dotnet-test-reports
         path:  TestResults/
