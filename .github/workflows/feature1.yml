@@ -25,4 +25,21 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run:  |
+        dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx" mkdir -p TestResults mv **/test_results.trx TestResults/
+    - name:  Install Test Report Generator 
+      run:  dotnet tool install --global dotnet-reportgenerator-globaltool
+    - name:  Generate HTML Report
+      run:  |
+        reportgenerator \ 
+          "-reports:**/test_results.trx" \
+          "-targetdir:TestResults/html" \
+          -reporttypes:Html
+
+    - name:  Upload Test Results 
+      uses:  actions/upload-artifacts@v4
+      with:
+        name:  dotnet-test-reports
+        path:  TestResults/
+    
+   
