@@ -7,7 +7,8 @@ on:
   pull_request:
     branches: 
       - develop
-      - 'feature/*'
+      - develop1
+      - 'feature1/*'
       - main
       
 jobs:
