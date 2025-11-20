@@ -42,12 +42,11 @@
               "Title": "TestServerFixture.cs",
               "DocumentMoniker": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorAppTests\\SystemTests\\TestServerFixture.cs",
               "RelativeDocumentMoniker": "CalculatorAppTests\\SystemTests\\TestServerFixture.cs",
-              "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorAppTests\\SystemTests\\TestServerFixture.cs*",
-              "RelativeToolTip": "CalculatorAppTests\\SystemTests\\TestServerFixture.cs*",
+              "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorAppTests\\SystemTests\\TestServerFixture.cs",
+              "RelativeToolTip": "CalculatorAppTests\\SystemTests\\TestServerFixture.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T04:55:07.78Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T04:55:07.78Z"
             },
             {
               "$type": "Document",
@@ -57,7 +56,7 @@
               "RelativeDocumentMoniker": "CalculatorAppTests\\SystemTests\\MultiplyTesting.cs",
               "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorAppTests\\SystemTests\\MultiplyTesting.cs*",
               "RelativeToolTip": "CalculatorAppTests\\SystemTests\\MultiplyTesting.cs*",
-              "ViewState": "AgIAAA8AAAAAAAAAAAA1wAkAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-20T04:52:29.011Z",
               "EditorCaption": ""
@@ -65,15 +64,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "CalculatorAppTests",
+              "Title": "CalculatorAppTests.csproj",
               "DocumentMoniker": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorAppTests\\CalculatorAppTests.csproj",
               "RelativeDocumentMoniker": "CalculatorAppTests\\CalculatorAppTests.csproj",
-              "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorAppTests\\CalculatorAppTests.csproj*",
-              "RelativeToolTip": "CalculatorAppTests\\CalculatorAppTests.csproj*",
+              "ToolTip": "C:\\Users\\40042868\\Training_G10-develop\\CalculatorAppTests\\CalculatorAppTests.csproj",
+              "RelativeToolTip": "CalculatorAppTests\\CalculatorAppTests.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-20T04:45:21.679Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T04:45:21.679Z"
             },
             {
               "$type": "Document",
@@ -85,8 +83,7 @@
               "RelativeToolTip": "CalculatorApp\\Controllers\\CalculatorController.cs",
               "ViewState": "AgIAAFYAAAAAAAAAAAAuwGEAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T09:39:21.73Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-18T09:39:21.73Z"
             },
             {
               "$type": "Document",
@@ -110,8 +107,7 @@
               "RelativeToolTip": "CalculatorApp\\Services\\CalculatorService.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAAACgAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T09:37:57.757Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-18T09:37:57.757Z"
             }
           ]
         },

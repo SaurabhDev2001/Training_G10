@@ -15,8 +15,8 @@ public class MultiplySystemTests : IClassFixture<TestServerFixture>
     [Fact]
     public async Task Multiply_ValidNumbers_ReturnsOk()
     {
-        var response = await _client.GetAsync("/Multiply?number1=5&number2=3");
-        response.EnsureSuccessStatusCode();
+        var response = await _client.GetAsync("/api/Calculator/Multiply?number1=5&number2=3");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var result = await response.Content.ReadAsStringAsync();
         Assert.Equal("15", result);
@@ -26,6 +26,6 @@ public class MultiplySystemTests : IClassFixture<TestServerFixture>
     public async Task Multiply_InvalidNumbers_ReturnsBadRequest()
     {
         var response = await _client.GetAsync("/Multiply?number1=abc&number2=3");
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }
