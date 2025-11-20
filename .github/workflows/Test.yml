@@ -1,27 +1,27 @@
-name: Test Workflow
+# name: Test Workflow
 
-on:
-  workflow_call:
-    inputs:
-      run-condition:
-        required: true
-        type: string
+# on:
+#   workflow_call:
+#     inputs:
+#       run-condition:
+#         required: true
+#         type: string
 
-jobs:
-  test:
-    if: ${{ inputs.run-condition == 'true' }}
-    runs-on: ubuntu-latest
+# jobs:
+#   test:
+#     if: ${{ inputs.run-condition == 'true' }}
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "8.0.x"
+#     steps:
+#       - name: Setup .NET
+#         uses: actions/setup-dotnet@v3
+#         with:
+#           dotnet-version: "8.0.x"
 
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v5
-        with:
-          name: Calculator-build
+#       - name: Download Build Artifact
+#         uses: actions/download-artifact@v5
+#         with:
+#           name: Calculator-build
 
-      - name: Run Tests
-        run: dotnet test --no-build --verbosity normal
+#       - name: Run Tests
+#         run: dotnet test --no-build --verbosity normal
