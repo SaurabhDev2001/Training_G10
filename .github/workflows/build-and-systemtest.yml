@@ -1,0 +1,44 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Calculator App CI
+
+on:
+  push:
+    branches-ignore:
+      main
+  pull_request:
+    branches: 
+      - develop
+      - develop1
+      - 'feature1/*'
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    if:  github.actor == 'SaurabhDev2001'  || github.base_ref != 'main'
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name:  Run System Tests
+      run:  |
+        dotnet test --no-build --verbosity normal \ 
+           --collect:"XPlat Code Coverage" \
+
+    - name:  Verify Coverage File Location
+      run:  find . -name "*.xml"
+
+    - name:  Upload Coverage Report
+      uses:  actions/upload-artifact@v4
+      with:  
+        name:  coverage-report
