@@ -45,7 +45,9 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
 
       - name: Install ReportGenerator
-        run: dothet tool install --global dotnet-reportgenerator-globaltool
+        run: 
+          dothet tool install --global dotnet-reportgenerator-globaltool
+          echo "$env.USERPROFILE\.dotnet\tools" | Out-FilePath $env:GITHUB_PATH -Encoding utf8
         
       - name: Build, Test, and Analyze with Covarage
         env:
