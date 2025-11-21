@@ -32,14 +32,28 @@ jobs:
       - name: Build Solution
         run: dotnet build --no-restore
 
-      - name: Run Tests
-        run: dotnet test --no-build --verbosity normal
+      # - name: Run Tests
+      #   run: dotnet test --no-build --verbosity normal
 
-      - name: Upload a Build Artifact
+      # - name: Upload a Build Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Calculator-build
+      #     path: '**/bin/Debug/net8.0/**'
+      #     retention-days: 30
+
+      - name: Run Tests with Coverage
+        run: |
+          dotnet test --no-build --verbosity normal \
+            /p:CollectCoverage=true \
+            /p:CoverletOutputFormat=opencover \
+
+/p:CoverletOutput=TestResults/coverage.opencover.xml
+
+      - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
-          name: Calculator-build
-          path: '**/bin/Debug/net8.0/**'
-          retention-days: 30
+          name: coverage-report
+          path: TestResults/coverage.opencover.xml
 
      
