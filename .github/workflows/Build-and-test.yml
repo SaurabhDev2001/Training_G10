@@ -52,12 +52,12 @@ jobs:
       - name: Verify Coverage File Location
         run: |
           echo "Searching for the coverage files..."
-          find . -name "coverage.opencover.xml"
+          find . -name "*.xml"
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: '**/TestResults/coverage.opencover.xml'
+          path: '**/TestResults/**/*.xml'
 
      
