@@ -45,14 +45,10 @@ jobs:
       - name: Run Tests with Coverage
         run: |
           dotnet test --no-build --verbosity normal \
-            /p:CollectCoverage=true \
-            /p:CoverletOutputFormat=opencover \
-            /p:CoverletOutput=TestResults/coverage.opencover.xml
+            --collect:"XPlat Code Coverage"
 
       - name: Verify Coverage File Location
-        run: |
-          echo "Searching for the coverage files..."
-          find . -name "*.xml"
+        run: find . -name "*.xml"
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
