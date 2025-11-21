@@ -32,8 +32,14 @@ jobs:
       run: dotnet build --no-restore
     - name:  Run System Tests
       run:  |
-        dotnet test --no-build --verbosity normal \ 
-           --collect:"XPlat Code Coverage" \
+        PROJECT_FILE=$(find . -name "*.csproj" | head -n 1)
+        if [ -z "$PROJECT_FILE" ]; then
+        echo "No Project File found!"
+        exit 1
+         fi
+          echo "found project:  $PROJECT_FILE"
+          dotnet test "$PROJECT_FILE"  --no-build --verbosity normal \
+            --collect:"XPlat Code Coverage" \
 
     - name:  Verify Coverage File Location
       run:  find . -name "*.xml"
