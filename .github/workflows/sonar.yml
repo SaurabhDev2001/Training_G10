@@ -46,7 +46,7 @@ jobs:
 
       - name: Install ReportGenerator
         shell: powershell
-        run: 
+        run: |
           dotnet tool install --global dotnet-reportgenerator-globaltool
           echo "$env.USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
         
