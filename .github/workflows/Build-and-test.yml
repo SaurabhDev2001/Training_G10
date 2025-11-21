@@ -49,6 +49,11 @@ jobs:
             /p:CoverletOutputFormat=opencover \
             /p:CoverletOutput=TestResults/coverage.opencover.xml
 
+      - name: Verify Coverage File Location
+        run: |
+          echo "Searching for the coverage files..."
+          find . -name "coverage.opencover.xml"
+
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
