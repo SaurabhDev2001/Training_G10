@@ -44,11 +44,12 @@ jobs:
           New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
 
-      - name: Build and analyze
+      - name: Build, Test, and Analyze with Covarage
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"${{ vars.PROJECT_KEY }}" /o:"${{ vars.ORGANIZATION }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.qualitygate.wait=true
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"${{ vars.PROJECT_KEY }}" /o:"${{ vars.ORGANIZATION }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.qualitygate.wait=true /d:sonar.cs.opencover.reportsPath="**/coverage.opencover.xml"
           dotnet build
+          dotnet test --collect:"XPlat Code Coverage" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
