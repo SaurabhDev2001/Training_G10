@@ -45,6 +45,7 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
 
       - name: Install ReportGenerator
+        shell: powershell
         run: 
           dotnet tool install --global dotnet-reportgenerator-globaltool
           echo "$env.USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
