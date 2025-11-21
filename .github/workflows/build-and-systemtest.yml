@@ -49,3 +49,4 @@ jobs:
       with:  
         name:  system-test
         path:  '**/TestResults/**/*.xml'
+        retention-days:  30
