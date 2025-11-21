@@ -40,6 +40,8 @@ jobs:
           echo "found project:  $PROJECT_FILE"
           dotnet test "$PROJECT_FILE"  --no-build --verbosity normal \
             --collect:"XPlat Code Coverage" \
+    - name:  Debug:List all files
+      run:  find . -type f
 
     - name:  Verify Coverage File Location
       run:  find . -name "coverage.coberture.xml" || echo "No Coverage File Found"
