@@ -47,8 +47,7 @@ jobs:
           dotnet test --no-build --verbosity normal \
             /p:CollectCoverage=true \
             /p:CoverletOutputFormat=opencover \
-
-/p:CoverletOutput=TestResults/coverage.opencover.xml
+            /p:CoverletOutput=TestResults/coverage.opencover.xml
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
