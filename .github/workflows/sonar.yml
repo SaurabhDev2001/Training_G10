@@ -62,7 +62,7 @@ jobs:
 
       - name: Generate HTML Coverage Report
         run: | 
-          reportgenerator "-report:**/coverage.opencover.xml" "-targetdir:coverage-report" -reporttypes:Html
+          reportgenerator "-reports:**/coverage.opencover.xml" "-targetdir:coverage-report" "-reporttypes:Html"
           Rename-Item -Path "coverage-report/index.html" -NewName "code-coverage.html"
 
       - name: Upload Coverage Report Artifact
