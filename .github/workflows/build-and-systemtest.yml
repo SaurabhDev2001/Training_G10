@@ -46,6 +46,7 @@ jobs:
     - name:  Verify Coverage File Location
       run:  find . -name "coverage.coberture.xml" || echo "No Coverage File Found"
 
+   
     - name:  Upload Coverage Report
       if:  always()
       uses:  actions/upload-artifact@v4
@@ -61,5 +62,26 @@ jobs:
         name:  build-output
         path:  '**/bin/Debug/net8.0/**'
         retention-days:  30
+
+    - name:  Generate HTML Coverage Report
+      if:  always()
+      run:  |
+        dotnet tool install  --global dotnet-reportgenerator-globaltool
+        REPORT_FILE=$(find . -name "coverage.cobertura.xml" | head -n 1)
+        if [ -n "$REPORT_FILE" ]; then
+          reportgenerator "-reports:$REPORT_FILE" "-targetdir:coverage-html" -reporttypes:Html
+        else
+          echo "No Coverage File found, skipping HTML Report"
+        fi
+
+    - name:  Upload HTML Coverage Report   
+      if:  always()
+      uses:  actions/upload-atrifact@v4
+      with:
+        name:  coverage-html
+        path:  coverage-html/**
+        retention-days:  30
+
+    
         
       
