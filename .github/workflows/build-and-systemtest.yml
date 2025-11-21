@@ -42,7 +42,7 @@ jobs:
             --collect:"XPlat Code Coverage" \
 
     - name:  Verify Coverage File Location
-      run:  find . -name "*.xml"
+      run:  find . -name "coverage.coberture.xml" || echo "No Coverage File Found"
 
     - name:  Upload Coverage Report
       if:  always()
