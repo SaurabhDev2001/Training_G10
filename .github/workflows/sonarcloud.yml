@@ -28,32 +28,29 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Cache Sonar packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
       - name: Cache Sonar Scanner
         id: cache-scanner
         uses: actions/cache@v4
         with:
-          path: ~/.sonar/scanner
+          path: $HOME/.sonar/scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
 
-      - name: Install Sonar Scanner
+      - name: Install Sonar Scanner if not cached
         if: steps.cache-scanner.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ~/.sonar/scanner
-          dotnet tool update dotnet-sonarscanner --tool-path ~/.sonar/scanner
+          mkdir -p $HOME/.sonar/scanner
+          dotnet tool update dotnet-sonarscanner --tool-path $HOME/.sonar/scanner
 
       - name: Build and Analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          SCANNER="~/.sonar/scanner/dotnet-sonarscanner"
+          SCANNER="$HOME/.sonar/scanner/dotnet-sonarscanner"
+
+          echo "Scanner path: $SCANNER"
+          ls -la $HOME/.sonar/scanner || true
+
           $SCANNER begin \
             /k:"${{ vars.PROJECT_KEY }}" \
             /o:"${{ vars.ORGANIZATION }}" \
