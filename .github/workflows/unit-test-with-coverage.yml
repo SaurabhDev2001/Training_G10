@@ -1,0 +1,58 @@
+name: Unit Tests
+on:
+  workflow_call:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Ensure directories exist
+        run: |
+          mkdir -p TestResults
+          mkdir -p $RUNNER_TEMP/coverage
+
+      - name: Run Unit Tests and collect OpenCover coverage
+        run: |
+          OUT="$RUNNER_TEMP/coverage"
+          echo "Writing coverage to: $OUT"
+          dotnet test Calculator_Application.sln \
+            --filter "Category=Unit" \
+            --logger "trx;LogFileName=TestResults.trx" \
+            --results-directory TestResults \
+            /p:CollectCoverage=true \
+            /p:CoverletOutputFormat=opencover \
+            /p:CoverletOutput="$OUT/" \
+            --verbosity minimal
+            
+          FOUND=$(find "$OUT" -name "coverage.opencover.xml" -print -quit || true)
+          if [ -z "$FOUND" ]; then
+            echo "ERROR: coverage.opencover.xml not found under $OUT"
+            echo "Listing $OUT:"
+            ls -la "$OUT" || true
+            exit 1
+          fi
+          echo "Coverage produced at: $FOUND"
+          # Copy to stable filename (optional)
+          cp "$FOUND" "$OUT/coverage.opencover.xml"
+          ls -la "$OUT"
+
+      - name: Upload Unit Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          path: TestResults
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-opencover-xml
+          path: ${{ runner.temp }}/coverage/*.xml
+          retention-days: 14
