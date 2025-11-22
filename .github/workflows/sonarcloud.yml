@@ -54,8 +54,28 @@ jobs:
           $SCANNER begin \
             /k:"${{ vars.PROJECT_KEY }}" \
             /o:"${{ vars.ORGANIZATION }}" \
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.qualitygate.wait=true
 
           dotnet build
 
           $SCANNER end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+      - name: Save Sonar scanner output
+        run: |
+          mkdir -p sonar-output
+          if [ -d ".sonarqube" ]; then
+            cp -r .sonarqube sonar-output/.sonarqube || true
+          fi
+          if [ -d ".scannerwork" ]; then
+            cp -r .scannerwork sonar-output/.scannerwork || true
+          fi
+          echo "Contents of sonar-output:"
+          ls -la sonar-output || true
+
+      - name: Upload Sonar Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-report
+          path: sonar-output
+          retention-days: 14
