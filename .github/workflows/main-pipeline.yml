@@ -10,18 +10,23 @@ on:
 jobs:
   checkout:
     uses: ./.github/workflows/checkout.yml
+    
   build:
     needs: checkout
     uses: ./.github/workflows/build.yml
+    
   unit-tests:
     needs: build
     uses: ./.github/workflows/unit-tests.yml
+    
   system-tests:
     needs: build
     uses: ./.github/workflows/system-tests.yml
+    
   upload-artifacts:
     needs: [unit-tests, system-tests]
     uses: ./.github/workflows/upload-artifacts.yml
+    
   # sonarcloud:
   #   needs: build
   #   uses: ./.github/workflows/sonarcloud.yml
