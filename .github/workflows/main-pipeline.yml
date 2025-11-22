@@ -28,6 +28,8 @@ jobs:
     needs: [unit-tests, system-tests]
     uses: ./.github/workflows/upload-artifacts.yml
     
-  # sonarcloud:
-  #   needs: build
-  #   uses: ./.github/workflows/sonarcloud.yml
+  sonarcloud:
+    needs: build
+    uses: ./.github/workflows/sonarcloud.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
