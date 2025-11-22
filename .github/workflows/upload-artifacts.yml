@@ -1,0 +1,22 @@
+name: Reusable - Store Artifacts
+on:
+  workflow_call:
+jobs:
+  store:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
+          path: build-output
+      - name: Download Unit Test Results
+        uses: actions/download-artifact@v3
+        with:
+          name: unit-test-results
+          path: test-output/unit
+      - name: Download System Test Results
+        uses: actions/download-artifact@v3
+        with:
+          name: system-test-results
+          path: test-output/system

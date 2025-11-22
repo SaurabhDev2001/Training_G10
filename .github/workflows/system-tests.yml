@@ -1,0 +1,24 @@
+name: System Tests
+on:
+  workflow_call:
+jobs:
+  system-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: Run System Tests
+        run: dotnet test --filter TestCategory=System --no-build
+      - name: Upload System Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: system-test-results
+          path: TestResults
+
+      
