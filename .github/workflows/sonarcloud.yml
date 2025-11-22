@@ -1,0 +1,64 @@
+name: SonarCloud
+
+on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
+
+jobs:
+  sonar:
+    name: Build and Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Sonar packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Sonar Scanner
+        id: cache-scanner
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+
+      - name: Install Sonar Scanner
+        if: steps.cache-scanner.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/.sonar/scanner
+          dotnet tool update dotnet-sonarscanner --tool-path ~/.sonar/scanner
+
+      - name: Build and Analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          SCANNER="~/.sonar/scanner/dotnet-sonarscanner"
+          $SCANNER begin \
+            /k:"${{ vars.PROJECT_KEY }}" \
+            /o:"${{ vars.ORGANIZATION }}" \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+          dotnet build
+
+          $SCANNER end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
