@@ -7,6 +7,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Download Source Code
+        uses: actions/download-artifact@v4
+        with:
+          name: source-code
+          path: .
+
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
@@ -23,12 +29,9 @@ jobs:
 
       - name: Run Tests with Coverage
         run: |
-          dotnet test --no-build --verbosity normal \
+          dotnet test Calculator_Application.sln --no-build --verbosity normal \
             --collect:"XPlat Code Coverage" \
             --results-directory TestResults
-
-      - name: Verify Coverage File Location
-        run: find . -name "*.xml"
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
