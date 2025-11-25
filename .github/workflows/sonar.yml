@@ -1,4 +1,4 @@
-name: SonarQube Reusable
+name: SonarQube
 
 on:
   workflow_call:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build, Test (Coverage), and Analyze
+    name: Analyze
     runs-on: windows-latest
 
     steps:
@@ -17,38 +17,39 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Download Coverage Report
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: 'zulu'
 
-      - name: Cache Sonar scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v4
-        with:
-          path: ${{ runner.temp }}\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
+      # - name: Cache Sonar scanner
+      #   id: cache-sonar-scanner
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ${{ runner.temp }}\scanner
+      #     key: ${{ runner.os }}-sonar-scanner
+      #     restore-keys: ${{ runner.os }}-sonar-scanner
 
-      - name: Install Sonar scanner (if cache miss)
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory -Force
-          dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
+      - name: Install Sonar scanner
+        run: dotnet tool install --global dotnet-sonarscanner
 
-      - name: Create coverage directory
-        shell: powershell
-        run: New-Item -ItemType Directory -Force -Path "${{ runner.temp }}\coverage"
-
-      - name: Begin Sonar analysis
-        shell: powershell
+      - name: Sonar Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          $scanner = "${{ runner.temp }}\scanner\dotnet-sonarscanner"
-          & $scanner begin `
+            dotnet-sonarscanner begin `
             /k:"${{ vars.PROJECT_KEY }}" `
             /o:"${{ vars.ORGANIZATION }}" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
@@ -56,61 +57,63 @@ jobs:
             /d:sonar.cs.opencover.reportsPaths="${{ runner.temp }}\coverage\coverage.opencover.xml"
 
       - name: Build project
-        shell: powershell
         run: dotnet build --no-incremental
 
-      - name: Run tests + generate OpenCover coverage
-        shell: powershell
-        run: |
-          $cov = "${{ runner.temp }}\coverage\coverage.opencover.xml"
-          dotnet test --no-build `
-            /p:CollectCoverage=true `
-            /p:CoverletOutputFormat=opencover `
-            /p:CoverletOutput="$cov"
-
-          if (Test-Path $cov) {
-            Write-Host "Coverage generated: $cov"
-          } else {
-            Write-Host "ERROR: Coverage file not found!"
-            exit 1
-          }
-
       - name: End Sonar analysis
-        shell: powershell
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+
+      - name: Download SonarCloud Qulity Gate Status
         run: |
-          $scanner = "${{ runner.temp }}\scanner\dotnet-sonarscanner"
-          & $scanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          curl -s -u "${{ secrets.SONAR_TOKEN }}"\
+          "https://sonarcloud.io/api/qualitygates/project status? projectKey=${{ vars.PROJECT_KEY }}" \
+          -o sonar-quality-gate.json
 
-      - name: Install ReportGenerator
-        shell: powershell
+      - name: Download SonarCloud Issue Report
         run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23 || true
-          echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+          curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
+          "https://sonarcloud.io/api/issue/search?componentKeys=${{ vars.PROJECT_KEY }}" \
+          -o sonar-issue.json
 
-      - name: Generate HTML Coverage
-        shell: powershell
-        run: |
-          reportgenerator `
-            "-reports:${{ runner.temp }}\coverage\coverage.opencover.xml" `
-            "-targetdir:coverage-report" `
-            "-reporttypes:Html"
-
-          if (Test-Path "coverage-report/index.html") {
-            Rename-Item "coverage-report/index.html" "code-coverage.html" -Force
-          }
-
-      - name: Upload Coverage XML
+      - name: Upload SonarCloud Report as Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-opencover-xml
-          path: ${{ runner.temp }}\coverage\coverage.opencover.xml
+          name: sonarcloud-reports
+          path: |
+            sonar-quality-gate.json
+            sonar-issues.json
           retention-days: 14
 
-      - name: Upload HTML Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-html-report
-          path: coverage-report
-          retention-days: 14
+      # - name: Install ReportGenerator
+      #   shell: powershell
+      #   run: |
+      #     dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23 || true
+      #     echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+
+      # - name: Generate HTML Coverage
+      #   shell: powershell
+      #   run: |
+      #     reportgenerator `
+      #       "-reports:${{ runner.temp }}\coverage\coverage.opencover.xml" `
+      #       "-targetdir:coverage-report" `
+      #       "-reporttypes:Html"
+
+      #     if (Test-Path "coverage-report/index.html") {
+      #       Rename-Item "coverage-report/index.html" "code-coverage.html" -Force
+      #     }
+
+      # - name: Upload Coverage XML
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage-opencover-xml
+      #     path: ${{ runner.temp }}\coverage\coverage.opencover.xml
+      #     retention-days: 14
+
+      # - name: Upload HTML Coverage Report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage-html-report
+      #     path: coverage-report
+      #     retention-days: 14
