@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  unit-test:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Download Source Code
@@ -40,11 +40,21 @@ jobs:
       - name: Verify Coverage File Location
         run: find TestResults -name "*.xml" || echo "No coverage files found"
 
+      - name: Install ReportGenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+      - name: Generate Coverage and Test Summary Report
+        run: |
+          reportgenerator \
+            -reports:"TestResults/**/coverage.cobertura.xml" \
+            -targetdir:"TestResults/Report" \
+            -reporttypes:"HtmlInline;MarkdownSummary"
+
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: 'TestResults/**/coverage.cobertura.xml'
+          path: 'TestResults/Report'
           if-no-files-found: ignore
 
       - name: Upload Test Report (.trx)
