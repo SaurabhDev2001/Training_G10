@@ -6,6 +6,9 @@ on:
       dotnet-version:
         required: true
         type: string
+      solution-path:
+        required: true
+        type: string
 
 jobs:
   build:
@@ -16,7 +19,7 @@ jobs:
           dotnet-version: ${{ inputs.dotnet-version }}
 
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore ${{ inputs.solution-path }}
 
       - name: Build Solution
-        run: dotnet build --configuration Release 
+        run: dotnet build ${{ inputs.solution-path }} --no-restore

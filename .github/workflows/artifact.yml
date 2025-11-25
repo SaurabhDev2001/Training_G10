@@ -2,6 +2,10 @@
 name: Upload Build Artifact
 on:
   workflow_call:
+    inputs:
+      artifact-path:
+        required: true
+        type: string
 
 jobs:
   artifact:
@@ -11,5 +15,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Calculator-build
-          path: '**/bin/Debug/net8.0/**'
+          path: ${{ inputs.artifact-path }}
           retention-days: 30
