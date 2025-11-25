@@ -2,24 +2,15 @@
 name: Run Tests with Coverage
 on:
   workflow_call:
-    inputs:
-      solution-path:
-        required: true
-        type: string
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Ensure TestResults folder exists
-        run: mkdir -p TestResults
-
-      - name: Run Unit Tests
-        run: dotnet test ${{ inputs.solution-path }} \
-             --filter "Category=Unit" \
-             --logger "trx;LogFileName=TestResults.trx" \
-             --results-directory TestResults \
-             --collect:"XPlat Code Coverage"
+      - name: Run Tests with Coverage
+        run: |
+          dotnet test --no-build --verbosity normal \
+            --collect:"XPlat Code Coverage"
 
       - name: Verify Coverage File Location
         run: find . -name "*.xml"
@@ -29,9 +20,3 @@ jobs:
         with:
           name: coverage-report
           path: '**/TestResults/**/*.xml'
-
-      - name: Upload Test Results (.trx)
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: 'TestResults/TestResults.trx'

@@ -19,18 +19,11 @@ jobs:
   build:
     needs: checkout
     uses: ./.github/workflows/build.yml
-    with:
-      dotnet-version: '8.0.x'
-      solution-path: './Calculator_Application.sln'   # ✅ Update if in subfolder
 
   test:
     needs: build
     uses: ./.github/workflows/test.yml
-    with:
-      solution-path: './Calculator_Application.sln'
 
   artifact:
     needs: test
     uses: ./.github/workflows/artifact.yml
-    with:
-      artifact-path: '**/bin/Debug/net8.0/**'
