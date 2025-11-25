@@ -1,0 +1,22 @@
+
+name: Run Tests with Coverage
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Tests with Coverage
+        run: |
+          dotnet test --no-build --verbosity normal \
+            --collect:"XPlat Code Coverage"
+
+      - name: Verify Coverage File Location
+        run: find . -name "*.xml"
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: '**/TestResults/**/*.xml'

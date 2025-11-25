@@ -1,0 +1,31 @@
+
+name: Calculator App CI
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches:
+      - develop
+      - develop1
+      - 'feature1/*'
+      - main
+
+jobs:
+  checkout:
+    uses: ./.github/workflows/checkout.yml
+
+  build:
+    needs: checkout
+    uses: ./.github/workflows/build.yml
+    with:
+      dotnet-version: '8.0.x'
+
+  test:
+    needs: build
+    uses: ./.github/workflows/test.yml
+
+  artifact:
+    needs: test
+    uses: ./.github/workflows/artifact.yml

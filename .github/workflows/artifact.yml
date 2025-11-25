@@ -1,0 +1,15 @@
+
+name: Upload Build Artifact
+on:
+  workflow_call:
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Calculator-build
+          path: '**/bin/Debug/net8.0/**'
+          retention-days: 30
