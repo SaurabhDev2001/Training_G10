@@ -4,29 +4,34 @@ on:
   workflow_call:
 
 jobs:
-  unit-test:
+  test:
     runs-on: ubuntu-latest
     steps:
+      # Download source code from previous job
       - name: Download Source Code
         uses: actions/download-artifact@v4
         with:
           name: source-code
           path: .
 
+      # Download build output from previous job
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
           name: build-output
           path: .
 
+      # Setup .NET SDK
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
 
+      # Ensure TestResults folder exists
       - name: Ensure TestResults Folder Exists
         run: mkdir -p TestResults
 
+      # Run tests with coverage and generate .trx report
       - name: Run Tests with Coverage
         run: |
           dotnet test Calculator_Application.sln --no-build --verbosity normal \
@@ -34,16 +39,19 @@ jobs:
             --logger "trx;LogFileName=TestResults.trx" \
             --results-directory TestResults
 
+      # Verify coverage files exist
       - name: Verify Coverage File Location
         run: find TestResults -name "*.xml" || echo "No coverage files found"
 
+      # Upload coverage report (Cobertura XML)
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: 'TestResults/**/*.xml'
+          path: 'TestResults/**/coverage.cobertura.xml'
           if-no-files-found: ignore
 
+      # Upload test report (.trx)
       - name: Upload Test Report (.trx)
         uses: actions/upload-artifact@v4
         with:
