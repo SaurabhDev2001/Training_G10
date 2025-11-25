@@ -31,6 +31,7 @@ jobs:
         run: |
           dotnet test Calculator_Application.sln --no-build --verbosity normal \
             --collect:"XPlat Code Coverage" \
+            --logger "trx;LogFileName=TestResults.trx" \
             --results-directory TestResults
 
       - name: Verify Coverage File Location
@@ -41,4 +42,11 @@ jobs:
         with:
           name: coverage-report
           path: 'TestResults/**/*.xml'
+          if-no-files-found: ignore
+
+      - name: Upload Test Report (.trx)
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: 'TestResults/TestResults.trx'
           if-no-files-found: ignore
