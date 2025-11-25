@@ -14,7 +14,7 @@ on:
 
 jobs:
   checkout:
-    uses: ./.github/workflows/checkout.yml
+    uses: ./.github/workflows/prebuild.yml
 
   build:
     needs: checkout
