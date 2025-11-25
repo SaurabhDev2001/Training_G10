@@ -2,9 +2,9 @@ name: Testing SonarCloud
 
 on: 
   workflow_dispatch:
-  push:
-    branches:
-      - develop
+  # push:
+  #   branches:
+  #     - develop
   
 jobs:
   call-sonar-workflow:

@@ -5,11 +5,11 @@ on:
     branches-ignore:
       - main
   pull_request:
-    branches:
-      - develop
-      - develop1
-      - 'feature1/*'
-      - main
+    # branches:
+    #   - develop
+    #   - develop1
+    #   - 'feature1/*'
+    #   - main
       
 
 jobs:
