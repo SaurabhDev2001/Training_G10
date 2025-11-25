@@ -27,3 +27,7 @@ jobs:
   artifact:
     needs: unit-test
     uses: ./.github/workflows/artifact.yml
+
+  sonarcloud:
+    needs: unit-test
+    uses: ./.github/workflows/sonar.yml
