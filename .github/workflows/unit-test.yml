@@ -33,9 +33,12 @@ jobs:
             --collect:"XPlat Code Coverage" \
             --results-directory TestResults
 
+      - name: Verify Coverage File Location
+        run: find TestResults -name "*.xml" || echo "No coverage files found"
+
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: '**/TestResults/**/*.xml'
+          path: 'TestResults/**/*.xml'
           if-no-files-found: ignore
