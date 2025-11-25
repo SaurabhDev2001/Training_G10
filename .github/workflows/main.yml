@@ -13,17 +13,17 @@ on:
       - main
 
 jobs:
-  checkout:
+  prebuild:
     uses: ./.github/workflows/prebuild.yml
 
   build:
-    needs: checkout
+    needs: prebuild
     uses: ./.github/workflows/build.yml
 
-  test:
+  unit-test:
     needs: build
     uses: ./.github/workflows/unit-test.yml
 
   artifact:
-    needs: test
+    needs: unit-test
     uses: ./.github/workflows/artifact.yml
