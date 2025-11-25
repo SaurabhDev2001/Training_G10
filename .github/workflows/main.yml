@@ -33,3 +33,7 @@ jobs:
     uses: ./.github/workflows/sonar.yml
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  docker:
+    needs: build
+    uses: ./.github/workflows/docker-build.yml
