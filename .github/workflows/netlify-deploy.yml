@@ -38,3 +38,7 @@ jobs:
            --dir=coverage \
            --prod \
            --site=$NETLIFY_SITE_ID
+
+      - name: Add Netlify URL to Summary
+        run: |
+          echo "View Coverage Report" >> $GITHUB_STEP_SUMMARY
