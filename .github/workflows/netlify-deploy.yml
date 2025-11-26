@@ -49,14 +49,5 @@ jobs:
       - name: Add Netlify URL to Summary1
         run: |
           echo "### Coverage Report Deployed To Netlify1" >> $GITHUB_STEP_SUMMARY
-          echo "[View Coverage Report]($DEPLOY_URL)" >> $GITHUB_STEP_SUMMARY
+          echo "[View Coverage Report](https://code-coveragetest.netlify.app)" >> $GITHUB_STEP_SUMMARY
 
-      - name: Add Netlify URL to Summary2
-        run: |
-          echo "### Coverage Report Deployed To Netlify2" >> $GITHUB_STEP_SUMMARY
-          echo "View Coverage Report" >> $GITHUB_STEP_SUMMARY
-
-      - name: Add Netlify URL to Summary3
-        run: |
-          echo "### Coverage Report Deployed To Netlify3" >> $GITHUB_STEP_SUMMARY
-          echo "[View Coverage Report](${DEPLOY_URL})" >> $GITHUB_STEP_SUMMARY
