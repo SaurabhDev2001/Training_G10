@@ -34,14 +34,6 @@ jobs:
           java-version: 17
           distribution: 'zulu'
 
-      # - name: Cache Sonar scanner
-      #   id: cache-sonar-scanner
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ${{ runner.temp }}\scanner
-      #     key: ${{ runner.os }}-sonar-scanner
-      #     restore-keys: ${{ runner.os }}-sonar-scanner
-
       - name: Install Sonar scanner
         run: dotnet tool install --global dotnet-sonarscanner
 
@@ -64,17 +56,17 @@ jobs:
         run: dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
 
-      - name: Download SonarCloud Qulity Gate Status
+      - name: Download SonarCloud Quality Gate Status
         run: |
-          curl -s -u "${{ secrets.SONAR_TOKEN }}"\
-          "https://sonarcloud.io/api/qualitygates/project status? projectKey=SaurabhDev2001_Training_G10" \
+          curl -s -u "${{ secrets.SONAR_TOKEN }}:" `
+          "https://sonarcloud.io/api/qualitygates/project_status?projectKey=SaurabhDev2001_Training_G10" `
           -o sonar-quality-gate.json
 
       - name: Download SonarCloud Issue Report
         run: |
-          curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
-          "https://sonarcloud.io/api/issue/search?componentKeys=SaurabhDev2001_Training_G10" \
-          -o sonar-issue.json
+          curl -s -u "${{ secrets.SONAR_TOKEN }}:" `
+          "https://sonarcloud.io/api/issues/search?componentKeys=SaurabhDev2001_Training_G10" `
+          -o sonar-issues.json
 
       - name: Upload SonarCloud Report as Artifacts
         uses: actions/upload-artifact@v4
@@ -85,34 +77,4 @@ jobs:
             sonar-issues.json
           retention-days: 14
 
-      # - name: Install ReportGenerator
-      #   shell: powershell
-      #   run: |
-      #     dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23 || true
-      #     echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
-      # - name: Generate HTML Coverage
-      #   shell: powershell
-      #   run: |
-      #     reportgenerator `
-      #       "-reports:${{ runner.temp }}\coverage\coverage.opencover.xml" `
-      #       "-targetdir:coverage-report" `
-      #       "-reporttypes:Html"
-
-      #     if (Test-Path "coverage-report/index.html") {
-      #       Rename-Item "coverage-report/index.html" "code-coverage.html" -Force
-      #     }
-
-      # - name: Upload Coverage XML
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: coverage-opencover-xml
-      #     path: ${{ runner.temp }}\coverage\coverage.opencover.xml
-      #     retention-days: 14
-
-      # - name: Upload HTML Coverage Report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: coverage-html-report
-      #     path: coverage-report
-      #     retention-days: 14
