@@ -50,8 +50,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
             dotnet-sonarscanner begin `
-            /k:"${{ vars.PROJECT_KEY }}" `
-            /o:"${{ vars.ORGANIZATION }}" `
+            /k:"SaurabhDev2001_Training_G10" `
+            /o:"devop-testing" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.qualitygate.wait=true `
             /d:sonar.cs.opencover.reportsPaths="${{ runner.temp }}\coverage\coverage.opencover.xml"
@@ -68,13 +68,13 @@ jobs:
       - name: Download SonarCloud Qulity Gate Status
         run: |
           curl -s -u "${{ secrets.SONAR_TOKEN }}"\
-          "https://sonarcloud.io/api/qualitygates/project status? projectKey=${{ vars.PROJECT_KEY }}" \
+          "https://sonarcloud.io/api/qualitygates/project status? projectKey=SaurabhDev2001_Training_G10" \
           -o sonar-quality-gate.json
 
       - name: Download SonarCloud Issue Report
         run: |
           curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
-          "https://sonarcloud.io/api/issue/search?componentKeys=${{ vars.PROJECT_KEY }}" \
+          "https://sonarcloud.io/api/issue/search?componentKeys=SaurabhDev2001_Training_G10" \
           -o sonar-issue.json
 
       - name: Upload SonarCloud Report as Artifacts
