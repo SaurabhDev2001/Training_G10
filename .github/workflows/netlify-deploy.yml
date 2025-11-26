@@ -26,8 +26,10 @@ jobs:
         with: 
           node-version: '18'
 
-      - name: Install Netlify CLI
-        run: npm install -g netlify-cli
+      - name: Install Netlify CLI and jq
+        run: | 
+          npm install -g netlify-cli
+          sudo apt update && sudo apt-get install -y jq
 
       - name: Deploy to Netlify
         id: netlify-deploy
@@ -41,10 +43,20 @@ jobs:
            --site=$NETLIFY_SITE_ID \
            --json )
          echo "$DEPLOY_OUTPUT"
-         DEPLOY_URL=$( echo"$DEPLOY_OUTPUT" | jq -r '.url')
+         DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | jq -r '.url')
          echo "DEPLOY_URL = $DEPLOY_URL" >> $GITHUB_ENV
 
-      - name: Add Netlify URL to Summary
+      - name: Add Netlify URL to Summary1
         run: |
-          echo "### Coverage Report Deployed To Netlify" >> $GITHUB_STEP_SUMMARY
+          echo "### Coverage Report Deployed To Netlify1" >> $GITHUB_STEP_SUMMARY
           echo "[View Coverage Report]($DEPLOY_URL)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Add Netlify URL to Summary2
+        run: |
+          echo "### Coverage Report Deployed To Netlify2" >> $GITHUB_STEP_SUMMARY
+          echo "View Coverage Report" >> $GITHUB_STEP_SUMMARY
+
+      - name: Add Netlify URL to Summary3
+        run: |
+          echo "### Coverage Report Deployed To Netlify3" >> $GITHUB_STEP_SUMMARY
+          echo "[View Coverage Report](${DEPLOY_URL})" >> $GITHUB_STEP_SUMMARY
