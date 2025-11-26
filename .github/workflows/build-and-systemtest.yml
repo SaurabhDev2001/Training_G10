@@ -6,7 +6,7 @@ name: Calculator App CI
 on:
   push:
     branches-ignore:
-      main
+      - main
   pull_request:
     # branches: 
     #   - develop
