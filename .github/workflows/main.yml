@@ -40,3 +40,4 @@ jobs:
   netlify:
     needs: sonarcloud
     uses: ./.github/workflows/netlify-deploy.yml
+    secrets: inherit
