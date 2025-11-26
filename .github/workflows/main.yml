@@ -34,5 +34,5 @@ jobs:
     secrets: inherit
 
   docker:
-    needs: build
+    needs: [unit-test, artifact, sonarcloud]
     uses: ./.github/workflows/docker-build.yml
