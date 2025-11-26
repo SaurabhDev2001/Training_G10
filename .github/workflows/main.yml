@@ -8,9 +8,9 @@ on:
   pull_request:
     branches:
       - develop
-      - develop1
-      - 'feature1/*'
-      - main
+      # - develop1
+      # - 'feature1/*'
+      # - main
 
 jobs:
   prebuild:
