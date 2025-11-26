@@ -30,15 +30,21 @@ jobs:
         run: npm install -g netlify-cli
 
       - name: Deploy to Netlify
+        id: netlify-deploy
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-         netlify deploy \
+         DEPLOY_OUTPUT=$( netlify deploy \
            --dir=coverage \
            --prod \
            --site=$NETLIFY_SITE_ID
+           --json )
+         echo "$DEPLOY_OUTPUT"
+         DEPLOY_URL=$( echo"$DEPLOY_OUTPUT" | jq -r '.url')
+         echo "DEPLOY_URL = $ DEPLOY_URL" >> $GITHUB_ENV
 
       - name: Add Netlify URL to Summary
         run: |
+          echo "### Coverage Report Deployed To Netlify" >> $GITHUB_STEP_SUMMARY
           echo "View Coverage Report" >> $GITHUB_STEP_SUMMARY
