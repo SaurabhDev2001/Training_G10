@@ -1,34 +1,16 @@
-name: Build Docker Image Locally and Save as Artifact
+name: Build Docker Image
 
 on:
   workflow_call:
 
 jobs:
-  docker-build-local:
+  docker-build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build-output
-          path: app
-
+      - uses: actions/checkout@v4
+      
       - name: Build Docker Image
-        run: |
-          docker build -t my-app:latest .
-
-      - name: Save Docker Image to Tar
-        run: |
-          docker save my-app:latest -o my-app-image.tar
-
-      - name: Upload Docker Image Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-image
-          path: my-app-image.tar
-          retention-days: 14
- 
+        run: docker build -t calculator-app .
+        
+      - name: List Docker Images
+        run: docker images
