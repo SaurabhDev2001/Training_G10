@@ -42,9 +42,9 @@ jobs:
            --json )
          echo "$DEPLOY_OUTPUT"
          DEPLOY_URL=$( echo"$DEPLOY_OUTPUT" | jq -r '.url')
-         echo "DEPLOY_URL = $ DEPLOY_URL" >> $GITHUB_ENV
+         echo "DEPLOY_URL = $DEPLOY_URL" >> $GITHUB_ENV
 
       - name: Add Netlify URL to Summary
         run: |
           echo "### Coverage Report Deployed To Netlify" >> $GITHUB_STEP_SUMMARY
-          echo "View Coverage Report" >> $GITHUB_STEP_SUMMARY
+          echo "[View Coverage Report](${DEPLOY_URL})" >> $GITHUB_STEP_SUMMARY
