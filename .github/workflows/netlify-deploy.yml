@@ -1,0 +1,39 @@
+name: Deploy to Netlify
+
+on: 
+  workflow_dispatch: 
+  workflow_run:
+    workflows: ["sonarqube analysis"]
+    types: 
+      - complete
+
+jobs:
+  deploy-to-netlify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout reppository
+        uses: actions/checkout@v4
+
+      - name: Download Coverage Report
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '18'
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+         netlify deploy \
+           --dir=coverage \
+           --prod \
+           --site=$NETLIFY_SITE_ID
