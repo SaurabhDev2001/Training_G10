@@ -1,11 +1,12 @@
 name: Deploy to Netlify
 
 on: 
-  workflow_dispatch: 
-  workflow_run:
-    workflows: ["sonarqube analysis"]
-    types: 
-      - complete
+  workflow_call: 
+    secrets: 
+      NETLIFY_AUTH_TOKEN:
+        required: true
+      NETLIFY_SITE_ID:
+        required: true
 
 jobs:
   deploy-to-netlify:
