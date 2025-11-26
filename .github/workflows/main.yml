@@ -36,3 +36,7 @@ jobs:
   docker:
     needs: [unit-test, artifact, sonarcloud]
     uses: ./.github/workflows/docker-build.yml
+
+  netlify:
+    needs: sonarcloud
+    uses: ./.github/workflows/netlify-deploy.yml
