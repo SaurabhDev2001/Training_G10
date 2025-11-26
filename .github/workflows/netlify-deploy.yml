@@ -38,7 +38,7 @@ jobs:
          DEPLOY_OUTPUT=$( netlify deploy \
            --dir=coverage \
            --prod \
-           --site=$NETLIFY_SITE_ID
+           --site=$NETLIFY_SITE_ID \
            --json )
          echo "$DEPLOY_OUTPUT"
          DEPLOY_URL=$( echo"$DEPLOY_OUTPUT" | jq -r '.url')
