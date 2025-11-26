@@ -43,12 +43,17 @@ jobs:
       - name: Install ReportGenerator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
-      - name: Generate Coverage and Test Summary Report
+      - name: Generate Coverage Reports
         run: |
           reportgenerator \
             -reports:"TestResults/**/coverage.cobertura.xml" \
             -targetdir:"TestResults/Report" \
-            -reporttypes:"HtmlInline;MarkdownSummary"
+            -reporttypes:"HtmlInline;MarkdownSummary;OpenCover" \
+            -assemblyfilters:"+*"
+          
+          # Copy OpenCover format to temp directory for SonarCloud
+          mkdir -p ${{ runner.temp }}/coverage
+          cp TestResults/Report/OpenCover.xml ${{ runner.temp }}/coverage/coverage.opencover.xml || echo "OpenCover file not found"
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
