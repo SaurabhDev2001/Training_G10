@@ -29,7 +29,7 @@ jobs:
         dotnet-version: 8.0.x
     - name: Run System Tests
       run:  |
-        TEST_PROJECT=$(find . -name "*Tests.csproj" | grep -v Tests | head -n 1)
+        TEST_PROJECT=$(find . -name "*Tests.csproj"  | head -n 1)
         if [ -z "$TEST_PROJECT" ]; then
           echo "No main Project file found!"
           exit 1
