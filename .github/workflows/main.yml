@@ -12,6 +12,11 @@ on:
       # - 'feature1/*'
       # - main
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
 jobs:
   prebuild:
     uses: ./.github/workflows/prebuild.yml
@@ -31,6 +36,10 @@ jobs:
   security-scan:
     needs: build
     uses: ./.github/workflows/security-scan.yml
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
 
   performance-test:
     needs: build
