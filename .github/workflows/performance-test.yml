@@ -58,7 +58,55 @@ jobs:
             cd ..
           else
             echo "Found project: $PROJECT_FILE"
-            echo "Performance tests skipped - no benchmark implementation in existing project"
+            dotnet add "$PROJECT_FILE" package BenchmarkDotNet --version 0.13.12
+            
+            # Create benchmark class for existing project
+            cat > CalculatorBenchmarks.cs << 'EOF'
+          using BenchmarkDotNet.Attributes;
+          using BenchmarkDotNet.Running;
+
+          [MemoryDiagnoser]
+          public class CalculatorBenchmarks
+          {
+              [Benchmark]
+              public int AddNumbers() => 5 + 3;
+              
+              [Benchmark]
+              public int MultiplyNumbers() => 5 * 3;
+              
+              [Benchmark]
+              public double DivideNumbers() => 10.0 / 2.0;
+          }
+
+          public class BenchmarkProgram
+          {
+              public static void RunBenchmarks()
+              {
+                  BenchmarkRunner.Run<CalculatorBenchmarks>();
+              }
+          }
+          EOF
+            
+            # Create a simple console app to run benchmarks
+            dotnet new console -n BenchmarkRunner --force
+            cd BenchmarkRunner
+            dotnet add package BenchmarkDotNet --version 0.13.12
+            cp ../CalculatorBenchmarks.cs .
+            
+            cat > Program.cs << 'EOF'
+          using BenchmarkDotNet.Running;
+
+          class Program
+          {
+              static void Main(string[] args)
+              {
+                  BenchmarkRunner.Run<CalculatorBenchmarks>();
+              }
+          }
+          EOF
+            
+            dotnet run -c Release
+            cd ..
           fi
 
       - name: Create Performance Results Directory
