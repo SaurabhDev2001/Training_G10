@@ -1,0 +1,20 @@
+
+name:  Prebuild
+on:
+  workflow_call:
+
+jobs:
+  prebuild:
+    runs-on:  ubuntu-latest
+    steps:
+      - name:  checkout repository
+        uses:  actions/checkout@v3
+        with:
+          fetch-depth:  0
+
+      - name:  Upload Source code
+        uses:  action/upload-artifact@v4
+        with:
+          name:  source code
+          path: .
+        
