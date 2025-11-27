@@ -6,6 +6,12 @@ jobs:
   performance-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Download Source Code
+        uses: actions/download-artifact@v4
+        with:
+          name: source-code
+          path: .
+
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
@@ -17,14 +23,16 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install BenchmarkDotNet
-        run: dotnet add package BenchmarkDotNet --version 0.13.12
-
       - name: Run Performance Tests
         run: |
-          # Create a simple benchmark if none exists
-          if [ ! -f "Benchmarks.cs" ]; then
-            cat > Benchmarks.cs << 'EOF'
+          PROJECT_FILE=$(find . -name "*.csproj" | grep -v Tests | head -n 1)
+          if [ -z "$PROJECT_FILE" ]; then
+            echo "No project file found, creating benchmark project"
+            dotnet new console -n BenchmarkApp
+            cd BenchmarkApp
+            dotnet add package BenchmarkDotNet --version 0.13.12
+            
+            cat > Program.cs << 'EOF'
           using BenchmarkDotNet.Attributes;
           using BenchmarkDotNet.Running;
 
@@ -46,8 +54,13 @@ jobs:
               }
           }
           EOF
+            dotnet run -c Release
+          else
+            echo "Found project: $PROJECT_FILE"
+            dotnet add "$PROJECT_FILE" package BenchmarkDotNet --version 0.13.12
+            dotnet build "$PROJECT_FILE" -c Release
+            echo "Performance tests completed - using existing project"
           fi
-          dotnet run -c Release
 
       - name: Upload Performance Results
         uses: actions/upload-artifact@v4
