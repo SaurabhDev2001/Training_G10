@@ -61,9 +61,16 @@ jobs:
             echo "Performance tests skipped - no benchmark implementation in existing project"
           fi
 
+      - name: Create Performance Results Directory
+        run: |
+          if [ ! -d "BenchmarkDotNet.Artifacts" ]; then
+            mkdir -p BenchmarkDotNet.Artifacts
+            echo "Performance test summary: No benchmarks executed" > BenchmarkDotNet.Artifacts/summary.txt
+          fi
+
       - name: Upload Performance Results
         uses: actions/upload-artifact@v4
         with:
           name: performance-results
-          path: '**/BenchmarkDotNet.Artifacts/**'
+          path: 'BenchmarkDotNet.Artifacts/'
           if-no-files-found: ignore
