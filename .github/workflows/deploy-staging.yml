@@ -1,0 +1,35 @@
+name: Deploy to Staging
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build for Staging
+        run: |
+          dotnet build --configuration Release
+          dotnet publish --configuration Release --output ./publish
+
+      - name: Deploy to Staging Environment
+        run: |
+          echo "Deploying to staging environment..."
+          # Add your staging deployment commands here
+          # Example: rsync, scp, or cloud provider CLI commands
+
+      - name: Run Smoke Tests
+        run: |
+          echo "Running smoke tests on staging..."
+          # Add basic health checks here

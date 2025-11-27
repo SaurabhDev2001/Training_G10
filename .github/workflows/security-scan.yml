@@ -1,0 +1,37 @@
+name: Security Scan
+on:
+  workflow_call:
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Source Code
+        uses: actions/download-artifact@v4
+        with:
+          name: source-code
+          path: .
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/init@v3
+        with:
+          languages: csharp
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: Run Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'Calculator App'
+          path: '.'
+          format: 'ALL'
+
+      - name: Upload Dependency Check Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: reports/
