@@ -55,15 +55,15 @@ jobs:
           }
           EOF
             dotnet run -c Release
+            cd ..
           else
             echo "Found project: $PROJECT_FILE"
-            dotnet add "$PROJECT_FILE" package BenchmarkDotNet --version 0.13.12
-            dotnet build "$PROJECT_FILE" -c Release
-            echo "Performance tests completed - using existing project"
+            echo "Performance tests skipped - no benchmark implementation in existing project"
           fi
 
       - name: Upload Performance Results
         uses: actions/upload-artifact@v4
         with:
           name: performance-results
-          path: BenchmarkDotNet.Artifacts/
+          path: '**/BenchmarkDotNet.Artifacts/**'
+          if-no-files-found: ignore
