@@ -1,0 +1,70 @@
+
+name: Run Tests with Coverage
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Source Code
+        uses: actions/download-artifact@v4
+        with:
+          name: source-code
+          path: .
+
+      - name: Download Build Output
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: .
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Ensure TestResults Folder Exists
+        run: mkdir -p TestResults
+
+      - name: Restore Test Project
+        run: dotnet restore CalculatorAppTests/CalculatorAppTests.csproj
+
+      - name: Run Tests with Coverage
+        run: |
+          dotnet test CalculatorAppTests/CalculatorAppTests.csproj --verbosity normal \
+            --collect:"XPlat Code Coverage" \
+            --logger "trx;LogFileName=TestResults.trx" \
+            --results-directory TestResults
+
+      - name: Verify Coverage File Location
+        run: find TestResults -name "*.xml" || echo "No coverage files found"
+
+      - name: Install ReportGenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+      - name: Generate Coverage Reports
+        run: |
+          reportgenerator \
+            -reports:"TestResults/**/coverage.cobertura.xml" \
+            -targetdir:"TestResults/Report" \
+            -reporttypes:"HtmlInline;MarkdownSummary;OpenCover" \
+            -assemblyfilters:"+*"
+          
+          # Copy OpenCover format to temp directory for SonarCloud
+          mkdir -p ${{ runner.temp }}/coverage
+          cp TestResults/Report/OpenCover.xml ${{ runner.temp }}/coverage/coverage.opencover.xml || echo "OpenCover file not found"
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: 'TestResults/Report'
+          if-no-files-found: ignore
+
+      - name: Upload Test Report (.trx)
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: 'TestResults/TestResults.trx'
+          if-no-files-found: ignore

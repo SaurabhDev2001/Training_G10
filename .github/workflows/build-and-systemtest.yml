@@ -1,0 +1,87 @@
+# # This workflow will build a .NET project
+# # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+# name: Calculator App CI
+
+# on:
+#   push:
+#     branches-ignore:
+#       - main
+#   pull_request:
+#     # branches: 
+#     #   - develop
+#     #   - develop1
+#     #   - 'feature1/*'
+#     #   - main
+
+# jobs:
+#   build:
+
+#     runs-on: ubuntu-latest
+#     if:  github.actor == 'SaurabhDev2001'  || github.base_ref != 'main'
+
+#     steps:
+#     - uses: actions/checkout@v4
+#     - name: Setup .NET
+#       uses: actions/setup-dotnet@v4
+#       with:
+#         dotnet-version: 8.0.x
+#     - name: Restore dependencies
+#       run: dotnet restore
+#     - name: Build
+#       run: dotnet build --no-restore
+#     - name:  Run System Tests
+#       run:  |
+#         PROJECT_FILE=$(find . -name "*.csproj" | head -n 1)
+#         if [ -z "$PROJECT_FILE" ]; then
+#         echo "No Project File found!"
+#         exit 1
+#          fi
+#           echo "found project:  $PROJECT_FILE"
+#           dotnet test "$PROJECT_FILE"  --no-build --verbosity normal \
+#             --collect:"XPlat Code Coverage" \
+#     - name:  Debug:List all files
+#       run:  find . -type f
+
+#     - name:  Verify Coverage File Location
+#       run:  find . -name "coverage.coberture.xml" || echo "No Coverage File Found"
+
+   
+#     - name:  Upload Coverage Report
+#       if:  always()
+#       uses:  actions/upload-artifact@v4
+#       with:
+#         name:  Coverage-Report
+#         path:  '**/TestResults/**/coverage.cobertura.xml'
+#         retention-days:  30
+
+#     - name:  Upload Build Artifact
+#       if:  always()
+#       uses:  actions/upload-artifact@v4
+#       with:
+#         name:  build-output
+#         path:  '**/bin/Debug/net8.0/**'
+#         retention-days:  30
+
+#     - name:  Generate HTML Coverage Report
+#       if:  always()
+#       run:  |
+#         dotnet tool install  --global dotnet-reportgenerator-globaltool
+#         REPORT_FILE=$(find . -name "coverage.cobertura.xml" | head -n 1)
+#         if [ -n "$REPORT_FILE" ]; then
+#           reportgenerator "-reports:$REPORT_FILE" "-targetdir:coverage-html" -reporttypes:Html
+#         else
+#           echo "No Coverage File found, skipping HTML Report"
+#         fi
+
+#     - name:  Upload HTML Coverage Report   
+#       if:  always()
+#       uses:  actions/upload-artifact@v4
+#       with:
+#         name:  coverage-html
+#         path:  coverage-html/**
+#         retention-days:  30
+
+    
+        
+      
