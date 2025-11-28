@@ -24,6 +24,9 @@ jobs:
     needs: build
     uses: ./.github/workflows/unit-test.yml
 
+  system-test:
+    needs:  build
+    uses:  ./.github/workflows/system-test.yml
   artifact:
     needs: unit-test
     uses: ./.github/workflows/artifact.yml
