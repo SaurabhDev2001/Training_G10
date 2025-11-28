@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Analyze
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -42,9 +42,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
             dotnet-sonarscanner begin `
-            /k:"SaurabhDev2001_Training_G10" `
-            /o:"devop-testing" `
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
+            /k:"SaurabhDev2001_Training_G10" ` \
+            /o:"devop-testing" ` \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" ` \
             /d:sonar.cs.opencover.reportsPaths="${{ runner.temp }}\coverage\coverage.opencover.xml"
 
       - name: Build project
