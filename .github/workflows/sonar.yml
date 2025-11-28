@@ -58,14 +58,14 @@ jobs:
 
       - name: Download SonarCloud Quality Gate Status
         run: |
-          curl -s -u "${{ secrets.SONAR_TOKEN }}:" `
-          "https://sonarcloud.io/api/qualitygates/project_status?projectKey=SaurabhDev2001_Training_G10" `
+          curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
+          "https://sonarcloud.io/api/qualitygates/project_status?projectKey=SaurabhDev2001_Training_G10" \
           -o sonar-quality-gate.json
 
       - name: Download SonarCloud Issue Report
         run: |
-          curl -s -u "${{ secrets.SONAR_TOKEN }}:" `
-          "https://sonarcloud.io/api/issues/search?componentKeys=SaurabhDev2001_Training_G10" `
+          curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
+          "https://sonarcloud.io/api/issues/search?componentKeys=SaurabhDev2001_Training_G10" \
           -o sonar-issues.json
 
       - name: Upload SonarCloud Report as Artifacts
