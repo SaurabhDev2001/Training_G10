@@ -18,7 +18,7 @@ namespace CalculatorApp.Controllers
         [HttpPost]
         public ActionResult<double> Multiply([FromBody] CalculationRequest request)
         {
-            var result = _multiplicationService.Multiply(request.A, request.B);
+            var result = _multiplicationService.Multiply(request.Number1, request.Number2);
             return Ok(result);
         }
     }
