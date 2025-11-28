@@ -1,0 +1,60 @@
+
+name: Calculator App CI
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches:
+      - develop
+      # - develop1
+      # - 'feature1/*'
+      # - main
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  prebuild:
+    uses: ./.github/workflows/prebuild.yml
+
+  build:
+    needs: prebuild
+    uses: ./.github/workflows/build.yml
+
+  unit-test:
+    needs: build
+    uses: ./.github/workflows/unit-test.yml
+
+  system-test:
+    needs: build
+    uses: ./.github/workflows/system-test.yml
+
+  security-scan:
+    needs: build
+    uses: ./.github/workflows/security-scan.yml
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+  artifact:
+    needs: [unit-test, system-test, security-scan]
+    uses: ./.github/workflows/artifact.yml
+
+  sonarcloud:
+    needs: [unit-test, system-test]
+    uses: ./.github/workflows/sonar.yml
+    secrets: inherit
+
+  docker:
+    needs: [unit-test, system-test, artifact, sonarcloud]
+    uses: ./.github/workflows/docker-build.yml
+
+  # netlify:
+  #   needs: sonarcloud
+  #   uses: ./.github/workflows/netlify-deploy.yml
+  #   secrets: inherit

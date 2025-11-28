@@ -8,7 +8,6 @@ builder.Services.AddControllers();
 // Register your Calculator Service (Interface + Implementation)
 builder.Services.AddScoped<IAdditionService, AdditionService>();
 builder.Services.AddScoped<ISubtractionService, SubtractionService>();
-builder.Services.AddScoped<IMultiplicationService, MultiplicationService>();
 
 // Swagger / OpenAPI settings
 builder.Services.AddEndpointsApiExplorer();
