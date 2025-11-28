@@ -41,10 +41,10 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-            dotnet-sonarscanner begin `
-            /k:"SaurabhDev2001_Training_G10" ` \
-            /o:"devop-testing" ` \
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" ` \
+            dotnet-sonarscanner begin \
+            /k:"SaurabhDev2001_Training_G10"  \
+            /o:"devop-testing"  \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}"  \
             /d:sonar.cs.opencover.reportsPaths="${{ runner.temp }}\coverage\coverage.opencover.xml"
 
       - name: Build project
