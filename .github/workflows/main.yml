@@ -37,7 +37,7 @@ jobs:
     needs: [unit-test, artifact, sonarcloud]
     uses: ./.github/workflows/docker-build.yml
 
-  netlify:
-    needs: sonarcloud
-    uses: ./.github/workflows/netlify-deploy.yml
-    secrets: inherit
+  # netlify:
+  #   needs: sonarcloud
+  #   uses: ./.github/workflows/netlify-deploy.yml
+  #   secrets: inherit
